@@ -14,11 +14,16 @@ class DMaskTableViewCell: UITableViewCell {
     @IBOutlet var count: UILabel!
     @IBOutlet var useButton: UIButton!
 
+    @IBOutlet var tableView: UITableView!
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
     }
     
     func setCell(info: cell_info) {
@@ -37,6 +42,14 @@ class DMaskTableViewCell: UITableViewCell {
         useButton.frame = CGRect(x: width - 80, y: 5, width: 50, height: 50)
     }
     
+    func reloadCell(info: cell_info) {
+        name?.text = info.maskName
+        count?.text = String(info.maskCount)
+    }
+    
+    @IBAction func reloadButton() {
+        tableView.reloadData()
+    }
 
     
 }

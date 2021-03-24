@@ -12,7 +12,7 @@ class DisposableViewController: UIViewController, UITableViewDelegate, UITableVi
     let UserDefault = UserDefaults.standard
     var mask_count: Int = 10
     var add_mask: Int = 0
-    var IndexPath: IndexPath!
+    
     @IBOutlet var useMaskLabel: UILabel?
     @IBOutlet var tableView: UITableView!
     
@@ -21,8 +21,8 @@ class DisposableViewController: UIViewController, UITableViewDelegate, UITableVi
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let width = self.view.frame.size.width
-        let height = self.view.frame.size.height
+        //let width = self.view.frame.size.width
+        //let height = self.view.frame.size.height
         
         tableView = UITableView(frame: self.view.frame, style: UITableView.Style.grouped)
         
@@ -30,7 +30,7 @@ class DisposableViewController: UIViewController, UITableViewDelegate, UITableVi
         tableView.delegate = self
         
         //let Dnib = UINib(nibName: "DMaskTableViewCell", bundle: nil)
-        //self.tableView.register(Dnib, forCellReuseIdentifier: "Cell")
+        self.tableView.register(DMaskTableViewCell.self, forCellReuseIdentifier: "Cell")
         
         //tableView.frame = CGRect(x: 0, y: 260, width: Int(width), height: Int(height*2/3))
         //self.view.addSubview(tableView)
@@ -72,11 +72,14 @@ class DisposableViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell") as! DMaskTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! DMaskTableViewCell
         
         //cell.name.text = String(indexPath.row)
-        //if cell.setCell(info: cellData[])
-        cell.setCell(info: cellData[indexPath.row])
+        if cell.count != nil {
+            cell.setCell(info: cellData[indexPath.row])
+        } else {
+            cell.count = nil
+        }
 
         let width = self.view.frame.size.width
         //let height = self.view.frame.size.height
@@ -90,7 +93,7 @@ class DisposableViewController: UIViewController, UITableViewDelegate, UITableVi
         useButton.setTitle("USE", for: .normal)
         //push button
         useButton.frame = CGRect(x: width - 80, y: 5, width: 50, height: 50)
-        IndexPath = indexPath
+//        IndexPath = indexPath
         return cell
     }
     
@@ -104,8 +107,7 @@ class DisposableViewController: UIViewController, UITableViewDelegate, UITableVi
         useMaskLabel?.text = "あと\(mask_count)枚"
         cellData[sender.tag].maskCount -= 1
         print(String(cellData[sender.tag].maskCount))
-        tableView.reloadData()
+        
     }
     
-
 }

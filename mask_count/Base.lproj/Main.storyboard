@@ -63,6 +63,7 @@
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <state key="normal" title="Button"/>
                                                     <connections>
+                                                        <action selector="reloadButton" destination="Rxp-yM-cG4" eventType="touchUpInside" id="eJa-Uk-PJA"/>
                                                         <action selector="useMask:" destination="DT8-57-Eay" eventType="touchUpInside" id="Kbu-h5-jhP"/>
                                                     </connections>
                                                 </button>
@@ -78,6 +79,7 @@
                                         <connections>
                                             <outlet property="count" destination="33t-Ss-aLb" id="f1G-e0-Upg"/>
                                             <outlet property="name" destination="aBa-Z8-vnZ" id="KFO-B6-fuX"/>
+                                            <outlet property="tableView" destination="DIb-3e-Wnp" id="okX-SD-EQM"/>
                                             <outlet property="useButton" destination="NfR-fz-rOP" id="90t-4E-edv"/>
                                         </connections>
                                     </tableViewCell>
