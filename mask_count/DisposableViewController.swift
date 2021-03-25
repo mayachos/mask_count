@@ -10,7 +10,7 @@ import UIKit
 class DisposableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     let UserDefault = UserDefaults.standard
-    var mask_count: Int = 10
+    var mask_count: Int = 0
     var add_mask: Int = 0
     
     @IBOutlet var useMaskLabel: UILabel?
@@ -45,10 +45,10 @@ class DisposableViewController: UIViewController, UITableViewDelegate, UITableVi
         self.navigationController?.navigationBar.tintColor = .white
         
         
+        cellInit()
+        
         useMaskLabel?.textColor = #colorLiteral(red: 0.9529411765, green: 0.7098039216, blue: 0.7294117647, alpha: 1)
         useMaskLabel?.text = "あと\(mask_count)枚"
-        
-        cellInit()
         view.backgroundColor = #colorLiteral(red: 0, green: 0.5776427984, blue: 0.6491295099, alpha: 1)
     }
     
@@ -56,6 +56,10 @@ class DisposableViewController: UIViewController, UITableViewDelegate, UITableVi
         cellData.append(cell_info(name: "a", count: 10))
         cellData.append(cell_info(name: "b", count: 5))
         cellData.append(cell_info(name: "c", count: 7))
+        
+        for i in 0..<cellData.count {
+            mask_count += cellData[i].maskCount
+        }
     }
 
 
@@ -68,32 +72,17 @@ class DisposableViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 60
+        return 80
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! DMaskTableViewCell
         
         //cell.name.text = String(indexPath.row)
-        if cell.count != nil {
-            cell.setCell(info: cellData[indexPath.row])
-        } else {
-            cell.count = nil
-        }
+        cell.setCell(info: cellData[indexPath.row])
 
-        let width = self.view.frame.size.width
-        //let height = self.view.frame.size.height
-
-        //UIButton
-        let useButton = UIButton()
         cell.useButton.tag = indexPath.row
-        useButton.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
-        useButton.backgroundColor = #colorLiteral(red: 0.968627451, green: 0.4196078431, blue: 0.4117647059, alpha: 1)
-        useButton.layer.cornerRadius = 15
-        useButton.setTitle("USE", for: .normal)
-        //push button
-        useButton.frame = CGRect(x: width - 80, y: 5, width: 50, height: 50)
-//        IndexPath = indexPath
+       
         return cell
     }
     
@@ -110,4 +99,7 @@ class DisposableViewController: UIViewController, UITableViewDelegate, UITableVi
         
     }
     
+    @IBAction func addMask() {
+        
+    }
 }
