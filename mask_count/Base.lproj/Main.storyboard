@@ -93,6 +93,9 @@
                                 <rect key="frame" x="261" y="194" width="50" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button "/>
+                                <connections>
+                                    <action selector="addMask" destination="DT8-57-Eay" eventType="touchUpInside" id="mrO-ff-Ser"/>
+                                </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="5pQ-Np-cWv"/>

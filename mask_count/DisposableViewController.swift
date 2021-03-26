@@ -7,11 +7,14 @@
 
 import UIKit
 
-class DisposableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class DisposableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIPickerViewDelegate, UIPickerViewDataSource {
     
     let UserDefault = UserDefaults.standard
     var mask_count: Int = 0
     var add_mask: Int = 0
+    
+    var addArray: [Int] = ([Int])(1...100)
+    var addcount: Int = 0
     
     @IBOutlet var useMaskLabel: UILabel?
     @IBOutlet var tableView: UITableView!
@@ -21,6 +24,7 @@ class DisposableViewController: UIViewController, UITableViewDelegate, UITableVi
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        addArray.append(contentsOf: [150, 200, 250, 300, 350, 400, 450, 500, 600, 700, 800, 900, 1000])
         //let width = self.view.frame.size.width
         //let height = self.view.frame.size.height
         
@@ -99,7 +103,49 @@ class DisposableViewController: UIViewController, UITableViewDelegate, UITableVi
         
     }
     
+    
     @IBAction func addMask() {
+        let pv = UIPickerView()
+        
+        let title = "Add Masks"
+        let message = "追加するマスクの枚数を入力してください\n\n\n\n\n\n\n\n\n"
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let OKAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: {(action: UIAlertAction!) -> Void in
+            print(String(self.addcount))
+        })
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { action in }
+        
+        //PickerView
+        pv.selectRow(0, inComponent: 0, animated: true) //初期値
+        pv.frame = CGRect.init(x: 0, y: 50, width: view.bounds.width * 0.65, height: 150)
+        pv.dataSource = self
+        pv.delegate = self
+        alert.view.addSubview(pv)
+        
+        alert.addAction(OKAction)
+        alert.addAction(cancelAction)
+        
+        present(alert, animated: true, completion: nil)
         
     }
+    
+    //PickerViewの列数
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    //PickerViewの行数
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return addArray.count
+    }
+    //PickerViewの項目
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return String(addArray[row])
+    }
+    
+    //PickerViewの項目選択時
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        addcount = addArray[row]
+    }
+    
 }
